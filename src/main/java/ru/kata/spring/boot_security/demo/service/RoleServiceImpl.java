@@ -9,7 +9,6 @@ import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Transactional
 @Service
 public class RoleServiceImpl implements RoleService {
 
@@ -31,6 +30,7 @@ public class RoleServiceImpl implements RoleService {
                 .orElseThrow(() -> new RuntimeException("Role: " + roleName.name() + " not found!"));
     }
 
+    @Transactional
     public void saveRole(Role role) {
         roleRepository.save(role);
     }

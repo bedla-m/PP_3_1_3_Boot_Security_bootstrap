@@ -22,7 +22,7 @@ public class User implements UserDetails {
     private String password;
     private String username;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "users_id"),

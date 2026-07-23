@@ -28,7 +28,7 @@ public class UserController {
         if (id != null && userService.isAdmin(auth)) {
             user = userService.getUser(id);
         }
-        model.addAttribute("user", user);
+        model.addAttribute("profileUser", user);
         return "user";
     }
 }

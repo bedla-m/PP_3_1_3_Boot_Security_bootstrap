@@ -24,12 +24,14 @@ public class AdminController {
     public String adminPanel(ModelMap model) {
         model.addAttribute("users", userService.getAllUser());
         model.addAttribute("roles", roleService.getAllRoles());
-        model.addAttribute("user", new User());
+        model.addAttribute("newUser", new User());
+        model.addAttribute("profileUser", userService.getCurrentUserFromContext());
+        model.addAttribute("editUser", new User());
         return "admin";
     }
 
     @PostMapping(value = "/save")
-    public String saveUser(@ModelAttribute("user") User user,
+    public String saveUser(@ModelAttribute("newUser") User user,
                            @RequestParam(value = "roleIds", required = false) List<Long> roleIds) {
         userService.saveUserWithRolesAndPassword(user, roleIds);
         return "redirect:/admin";
@@ -46,8 +48,8 @@ public class AdminController {
                            ModelMap model) {
         User user = userService.getUser(id);
         user.setPassword(null);
-        model.addAttribute("user", user);
-        model.addAttribute("allRoles", roleService.getAllRoles());
+        model.addAttribute("editUser", user);
+        model.addAttribute("roles", roleService.getAllRoles());
         return "edit";
     }
 }

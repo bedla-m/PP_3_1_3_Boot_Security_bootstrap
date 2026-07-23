@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Users</title>
+    <title>Edit</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
 <div style="text-align: right; padding: 10px;">
@@ -13,53 +14,53 @@
     </form>
 </div>
 
+<!-- Окно для редактирования -->
 <body>
-<form th:action="@{/save}" th:object="${user}" method="post">
-    <input type="hidden" th:field="*{id}"/>
+<div th:fragment="editForm(user, roles)" th:object="${user}">
+    <form th:action="@{/save}" method="post" class="text-center font-weight-bold">
+        <input type="hidden" name="id" th:value="*{id}"/>
+        <div>
+            <label>ID:</label>
+            <input type="text" class="form-control w-50 mx-auto" name="id" th:value="*{id}" disabled="disabled"/>
+        </div>
 
-    <div>
-        <label>Name:</label>
-        <input type="text" th:field="*{name}"/>
-    </div>
-    <br/>
+        <div>
+            <label>Name:</label>
+            <input type="text" class="form-control w-50 mx-auto" th:value="*{name}" name="name"/>
+        </div>
+        <br/>
 
-    <div>
-        <label>Surname:</label>
-        <input type="text" th:field="*{surname}"/>
-    </div>
-    <br/>
+        <div>
+            <label>Surname:</label>
+            <input type="text" class="form-control w-50 mx-auto" name="surname" th:value="*{surname}"/>
+        </div>
 
-    <div>
-        <label>Age:</label>
-        <input type="number" th:field="*{age}"/>
-    </div>
-    <br/>
+        <div>
+            <label>Age:</label>
+            <input type="number" class="form-control w-50 mx-auto" name="age" th:value="*{age}"/>
+        </div>
 
-    <div>
-        <label>Username:</label>
-        <input type="text" th:field="*{username}"/>
-    </div>
-    <br/>
+        <div>
+            <label>Username:</label>
+            <input type="text" class="form-control w-50 mx-auto" name="username" th:value="*{username}"/>
+        </div>
 
-    <div>
-        <label>Password:</label>
-        <input type="text" th:field="*{password}" placeholder="*********"/>
-    </div>
+        <div>
+            <label>Password:</label>
+            <input type="text" class="form-control w-50 mx-auto" name="password"
+                   placeholder="Оставьте пустым, если не хотите менять"/>
+        </div>
 
-    <label>Roles:</label>
+        <label>Roles</label>
+        <select multiple class="form-control w-50 mx-auto" name="roleIds">
+            <option th:each="role : ${roles}" th:text="${role.roleName}"
+                    th:value="${role.id}" s
+                    th:selected="${user.roles.contains(role)}"
+                    th:classappend="${user.roles.contains(role)} ? 'bg-warning' : ''"></option>
+        </select>
+        <br>
 
-    <div th:each="role : ${allRoles}">
-        <input type="checkbox"
-               name="roleIds"
-               th:value="${role.id}"
-               th:checked="${user.roles.contains(role)}"/>
-        <label th:text="${role.roleName}"></label>
-    </div>
-
-    <button type="submit">save</button>
-</form>
-
-<form th:action="@{/delete}" th:object="${user}" method="post">
-    <input type="hidden" th:field="*{id}"/>
-    <button type="submit">remove</button>
-</form>
+        <button class="btn btn-success w-50">save</button>
+    </form>
+</div>
+</body>
